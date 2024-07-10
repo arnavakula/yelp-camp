@@ -121,9 +121,6 @@ app.delete('/campgrounds/:id/reviews/:reviewID', catchAsync(async (req, res) => 
     res.redirect(`/campgrounds/${id}`);
 }))
 
-
-
-
 //runs if no other route is valid (not every time like app.use)
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
@@ -135,7 +132,6 @@ app.use((err, req, res, next) => {
     if(!err.message) err.message = 'UNDEFINED ERROR';
     res.status(statusCode).render('error', { err });
 })
-
 
 app.listen(port, () => {
     console.log(`serving on port ${port}`);
