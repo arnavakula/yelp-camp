@@ -43,7 +43,15 @@
                 <button class="btn btn-success">Submit</button>
             </form>
             <% } %>
-            <div class="mb-3">
+            <h3 class="text-center mt-2">
+            <% if (!campground.reviews.length) { %>
+                No Reviews Yet
+            <% } else { %>
+                Reviews
+            <% } %>
+            </h3>
+            
+            <div class="mt-1 mb-3">
                 <% campground.reviews.forEach(review => { %>
                     <div class="card mb-2">
                         <div class="card-body">
