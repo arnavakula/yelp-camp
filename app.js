@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const ExpressError = require('./utils/ExpressError');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
@@ -24,14 +26,42 @@ app.use(express.json());
 //method override (for non get/post requests)
 app.use(methodOverride('_method'));
 
+//serve static assets
+app.use(express.static(path.join(__dirname, 'public')));
+
+//flash messages
+app.use(flash());
+
+//session config
+const sessionConfig = {
+    secret: 'tempsecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie:{
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+
+app.use(session(sessionConfig))
+
 //init ejs engine
 app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+//init res.locals (for flash)
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
+
 //init routers
 app.use('/campgrounds', campgrounds); 
 app.use('/campgrounds/:id/reviews', reviews);
+
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -52,4 +82,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`serving on port ${port}`);
 })
-
