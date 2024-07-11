@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { campgroundSchema } = require('../schemas');
 const Review = require('./review')
 const Schema = mongoose.Schema;
 
@@ -14,7 +13,11 @@ const CampgroundSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Review'
         }
-    ]
+    ],
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
 
 //middleware for deleting reviews after deleting a campground

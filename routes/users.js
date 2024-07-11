@@ -12,7 +12,7 @@ router.get('/register', (req, res) => {
 })
 
 //create new user
-router.post('/register', catchAsync(async (req, res, next) => {
+router.post('/register', storeReturnTo, catchAsync(async (req, res, next) => {
     try{
         const { email, username, password } = req.body;
         const user = new User({ email, username });
@@ -40,8 +40,11 @@ router.get('/login', (req, res) => {
 //authenticate user
 router.post('/login', storeReturnTo, passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}),(req, res) => {
     req.flash('success', 'Succesfully logged in, welcome!');
-    const redirectUrl = res.locals.returnTo || 'campgrounds';
+    let redirectUrl = res.locals.returnTo || '/campgrounds';
+
+    if(redirectUrl.endsWith('DELETE')) redirectUrl = '/campgrounds';
     delete req.session.returnTo;
+
     res.redirect(redirectUrl);
 })
 

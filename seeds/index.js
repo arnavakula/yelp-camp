@@ -25,7 +25,8 @@ const seedDB = async (seed) => {
             title: `${sample(descriptors)} ${sample(places)}`,
             image: `https://picsum.photos/400?random=${Math.random()}`,
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae impedit cumque saepe ea, dignissimos ratione dolore ullam quibusdam adipisci? Qui animi, quia maxime minus quis natus suscipit fuga fugit facere.',
-            price
+            price,
+            author: '669031965a30ccb852e776f9'
         })
 
         await campground.save();
