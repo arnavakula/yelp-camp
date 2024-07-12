@@ -35,7 +35,11 @@ const seedDB = async (seed) => {
             ],
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae impedit cumque saepe ea, dignissimos ratione dolore ullam quibusdam adipisci? Qui animi, quia maxime minus quis natus suscipit fuga fugit facere.',
             price,
-            author: '669031965a30ccb852e776f9'
+            author: '669031965a30ccb852e776f9',
+            geometry: {
+                type: 'Point',
+                coordinates: [randLoc.longitude, randLoc.latitude]
+            }
         })
 
         await campground.save();
