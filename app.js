@@ -81,7 +81,7 @@ app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.use('/', userRoutes);
 
 app.get('/', (req, res) => {
-    res.redirect('/campgrounds');
+    res.render('home');
 })
 
 //runs if no other route is valid (not every time like app.use)
